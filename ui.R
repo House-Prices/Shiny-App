@@ -1,6 +1,4 @@
 
-
-
 header <- dashboardHeader(
   dropdownMenu(type = "messages",
                messageItem(
