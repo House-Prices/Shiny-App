@@ -1,0 +1,26 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## House Prices Shiny App
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of House Prices Shiny-App is to ...
+
+
+
+## Data
+
+The data used in this project is [publicly available](https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data). 
+It has been included in this repository for convenience.
