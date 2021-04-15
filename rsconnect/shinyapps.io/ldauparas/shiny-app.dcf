@@ -1,0 +1,11 @@
+name: shiny-app
+title:
+username:
+account: ldauparas
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3967466
+bundleId: 4472694
+url: https://ldauparas.shinyapps.io/shiny-app/
+when: 1618445527.99974
+lastSyncTime: 1618445528.00074

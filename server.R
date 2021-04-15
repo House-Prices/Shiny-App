@@ -23,7 +23,7 @@ server <- function(input, output, session) {
   })
   
   output$plot1 <- renderPlot({
-    hist(iris$Sepal.Width)
+    hist(data_list$train$SalePrice)
   })
   
   # The currently selected tab from the first box
