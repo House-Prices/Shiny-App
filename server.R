@@ -1,5 +1,11 @@
 
 server <- function(input, output, session) {
+  
+  tabUnivariateServer(
+    "tab_univariate",
+    data_df = data_list[["train"]]
+  )
+  
   messageData <- data.frame(
     from = c("Admininstrator", "New User", "Support"),
     message = c(
@@ -22,15 +28,11 @@ server <- function(input, output, session) {
     dropdownMenu(type = "messages", .list = msgs)
   })
   
-  output$plot1 <- renderPlot({
-    hist(data_list$train$SalePrice)
-  })
   
   # The currently selected tab from the first box
   output$tabset1Selected <- renderText({
     input$tabset1
   })
-  
   
   output$progressBox <- renderInfoBox({
     infoBox(

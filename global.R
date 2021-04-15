@@ -4,6 +4,8 @@ library(purrr)
 library(tidyr)
 library(glue)
 library(readr)
+library(here)
+library(janitor)
 
 library(shiny)
 library(shinydashboard)
@@ -17,6 +19,9 @@ purrr::walk(
   ~ source(.x)
 )
 
+source_files_in_dir("modules")
+
 data_list <- readRDS("data/data_list.rds")
+
 
 # clean_train_data <- prepare_hp_data(data_list)

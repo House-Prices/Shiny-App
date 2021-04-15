@@ -37,7 +37,7 @@ header <- dashboardHeader(
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+    menuItem("Univariate", tabName = "univariate", icon = icon("dashboard")),
     menuItem("Widgets", icon = icon("th"), tabName = "widgets",
              badgeLabel = "new", badgeColor = "green"),
     menuItem("Info Boxes", tabName = "infoboxes", icon = icon("box"))
@@ -46,18 +46,7 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
   tabItems(
-    tabItem(tabName = "dashboard",
-            h2("Dashboard tab content"),
-            fluidRow(
-              box(plotOutput("plot1")),
-              
-              box(
-                "Box content here", br(), "More box content",
-                sliderInput("slider", "Slider input:", 1, 100, 50),
-                textInput("text", "Text input:")
-              )
-            )
-    ),
+    tabUnivariateUI("tab_univariate"),
     
     tabItem(tabName = "widgets",
             h2("Widgets tab content"),
