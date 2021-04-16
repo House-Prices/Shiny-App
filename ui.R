@@ -20,16 +20,16 @@ header <- dashboardHeader(
   ),
   dropdownMenuOutput("messageMenu"),
   dropdownMenu(type = "tasks", badgeStatus = "success",
-               taskItem(value = 90, color = "green",
+               taskItem(value = 90, #color = "green",
                         "Documentation"
                ),
-               taskItem(value = 17, color = "aqua",
+               taskItem(value = 17, #color = "aqua",
                         "Project X"
                ),
-               taskItem(value = 75, color = "yellow",
+               taskItem(value = 75, #color = "yellow",
                         "Server deployment"
                ),
-               taskItem(value = 80, color = "red",
+               taskItem(value = 80, #color = "red",
                         "Overall project"
                )
   )
@@ -39,7 +39,7 @@ sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Univariate", tabName = "univariate", icon = icon("dashboard")),
     menuItem("Widgets", icon = icon("th"), tabName = "widgets",
-             badgeLabel = "new", badgeColor = "green"),
+             badgeLabel = "new"),
     menuItem("Info Boxes", tabName = "infoboxes", icon = icon("box"))
   )
 )
@@ -60,6 +60,7 @@ body <- dashboardBody(
               ),
               tabBox(
                 side = "right", height = "250px",
+                id = "tabset2",
                 selected = "Tab3",
                 tabPanel("Tab1", "Tab content 1"),
                 tabPanel("Tab2", "Tab content 2"),
@@ -69,6 +70,7 @@ body <- dashboardBody(
             fluidRow(
               tabBox(
                 # Title can include an icon
+                id = "tabset3",
                 title = tagList(shiny::icon("gear"), "tabBox status"),
                 tabPanel("Tab1",
                          "Currently selected tab from first box:",
@@ -91,7 +93,7 @@ body <- dashboardBody(
             
             # infoBoxes with fill=TRUE
             fluidRow(
-              infoBox("New Orders", 10 * 2, icon = icon("credit-card"), fill = TRUE),
+              infoBox("New Orders", 10 * 2, icon = icon("credit-card"), fill = TRUE, color = "indigo"),
               infoBoxOutput("progressBox2"),
               infoBoxOutput("approvalBox2")
             ),

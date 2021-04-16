@@ -43,7 +43,7 @@ server <- function(input, output, session) {
   output$approvalBox <- renderInfoBox({
     infoBox(
       "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
-      color = "yellow"
+      color = "lime"
     )
   })
   
@@ -57,7 +57,7 @@ server <- function(input, output, session) {
   output$approvalBox2 <- renderInfoBox({
     infoBox(
       "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
-      color = "yellow", fill = TRUE
+      color = "lime", fill = TRUE
     )
   })
 }
