@@ -101,7 +101,7 @@ download_hp_data <- function(username, key) {
     purrr::set_names(files_to_get)
   
   
-  descriptions_df <- httr::GET(paste0(path, "data_description.txt"), auth) %>% 
+  description_df <- httr::GET(paste0(path, "data_description.txt"), auth) %>% 
     httr::content(as = "text", encoding = "UTF-8") %>% 
     strsplit("\n") %>% unlist() %>% 
     stringr::str_subset(":") %>% 
@@ -115,7 +115,7 @@ download_hp_data <- function(username, key) {
       description = stringr::str_remove_all(description, "\t")
     )
   
-  data_list[["description"]] <- descriptions_df
+  data_list[["description"]] <- description_df
   
   
   return(data_list)
