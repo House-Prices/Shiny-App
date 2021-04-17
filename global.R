@@ -8,6 +8,8 @@ library(here)
 library(janitor)
 
 library(ggplot2)
+library(patchwork)
+library(gridExtra)
 
 library(shiny)
 library(bs4Dash)

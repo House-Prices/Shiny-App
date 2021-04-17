@@ -6,6 +6,11 @@ server <- function(input, output, session) {
     data_df = data_list[["train"]]
   )
   
+  tabBivariateServer(
+    "tab_bivariate",
+    data_df = data_list[["train"]]
+  )
+  
   messageData <- data.frame(
     from = c("Admininstrator", "New User", "Support"),
     message = c(

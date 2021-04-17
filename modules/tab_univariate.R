@@ -20,8 +20,8 @@ tabUnivariateUI <- function(id) {
         ),
         shiny::tabPanel(
           "Numeric",
-          shiny::plotOutput(ns("plot_num")),
-          shiny::plotOutput(ns("boxplot_num"))
+          shiny::plotOutput(ns("plot_num"))
+        
         )
       )
     )
@@ -76,12 +76,18 @@ tabUnivariateServer <- function(id, data_df) {
         
         req(input$selected_cat_variable)
         
-        ggplot2::ggplot(
+        t1 <- category_df %>% 
+          count(.data[[input$selected_cat_variable]])
+        
+        p1 <- ggplot(
           data = category_df, 
-          ggplot2::aes_string(x = input$selected_cat_variable)
+          aes_string(x = input$selected_cat_variable)
         ) + 
-          ggplot2::geom_bar() + 
+          geom_bar() + 
           theme_minimal()
+        
+        
+        p1 + gridExtra::tableGrob(t1, rows = NULL) + plot_layout(widths = c(3, 1))
         
       })
       
@@ -90,25 +96,25 @@ tabUnivariateServer <- function(id, data_df) {
         
         req(input$selected_num_variable)
         
-        ggplot(
+        p1 <- ggplot(
           data = numeric_df, 
           aes_string(x = input$selected_num_variable)
         ) + 
           geom_density(fill = "grey") + 
-          theme_minimal()
+          theme_bw() + 
+          labs(title = "Density Plot")
         
-      })
-      
-      output$boxplot_num <- shiny::renderPlot({
-        
-        req(input$selected_num_variable)
-        
-        ggplot(
-          data = numeric_df, 
+        p2 <- ggplot(
+          data = numeric_df,
           aes_string(x = input$selected_num_variable)
-        ) + 
-          geom_violin() + 
-          theme_minimal()
+        ) +
+          geom_boxplot() +
+          coord_flip() +
+          theme_minimal() + 
+          labs(title = "Box Plot")
+        
+        
+        p1 + p2 + plot_layout(widths = c(3, 1))
         
       })
       

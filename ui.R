@@ -1,53 +1,22 @@
 
-header <- dashboardHeader(
-  dropdownMenu(type = "messages",
-               messageItem(
-                 from = "Sales Dept",
-                 message = "Sales are steady this month."
-               ),
-               messageItem(
-                 from = "New User",
-                 message = "How do I register?",
-                 icon = icon("question"),
-                 time = "13:45"
-               ),
-               messageItem(
-                 from = "Support",
-                 message = "The new server is ready.",
-                 icon = icon("life-ring"),
-                 time = "2014-12-01"
-               )
-  ),
-  dropdownMenuOutput("messageMenu"),
-  dropdownMenu(type = "tasks", badgeStatus = "success",
-               taskItem(value = 90, #color = "green",
-                        "Documentation"
-               ),
-               taskItem(value = 17, #color = "aqua",
-                        "Project X"
-               ),
-               taskItem(value = 75, #color = "yellow",
-                        "Server deployment"
-               ),
-               taskItem(value = 80, #color = "red",
-                        "Overall project"
-               )
-  )
-)
+header <- dashboardHeader()
+
 
 sidebar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("Univariate", tabName = "univariate", icon = icon("dashboard")),
+    menuItem("Univariate", tabName = "univariate", icon = icon("chart-bar")),
+    menuItem("Bivariate", tabName = "bivariate", icon = icon("chart-area")),
     menuItem("Widgets", icon = icon("th"), tabName = "widgets",
              badgeLabel = "new"),
     menuItem("Info Boxes", tabName = "infoboxes", icon = icon("box"))
   )
 )
 
+
 body <- dashboardBody(
   tabItems(
     tabUnivariateUI("tab_univariate"),
-    
+    tabBivariateUI("tab_bivariate"),
     tabItem(tabName = "widgets",
             h2("Widgets tab content"),
             fluidRow(
