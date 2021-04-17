@@ -3,7 +3,8 @@ server <- function(input, output, session) {
   
   tabUnivariateServer(
     "tab_univariate",
-    data_df = data_list[["train"]]
+    data_df = data_list[["train"]],
+    description_df = data_list[["description"]]
   )
   
   tabBivariateServer(

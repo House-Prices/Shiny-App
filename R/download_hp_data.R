@@ -101,6 +101,23 @@ download_hp_data <- function(username, key) {
     purrr::set_names(files_to_get)
   
   
+  descriptions_df <- httr::GET(paste0(path, "data_description.txt"), auth) %>% 
+    httr::content(as = "text", encoding = "UTF-8") %>% 
+    strsplit("\n") %>% unlist() %>% 
+    stringr::str_subset(":") %>% 
+    stringr::str_subset("^[:alpha:]") %>% 
+    {tibble(
+      "raw" = .
+    )} %>% 
+    tidyr::separate(col = "raw", into = c("variable", "description"), sep = ":") %>% 
+    dplyr::mutate(
+      description = stringr::str_remove_all(description, "^[:blank:]"),
+      description = stringr::str_remove_all(description, "\t")
+    )
+  
+  data_list[["description"]] <- descriptions_df
+  
+  
   return(data_list)
   
 }
