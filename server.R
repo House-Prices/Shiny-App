@@ -6,6 +6,11 @@ server <- function(input, output, session) {
     data_df = data_list[["train"]]
   )
   
+  tabBivariateServer(
+    "tab_bivariate",
+    data_df = data_list[["train"]]
+  )
+  
   messageData <- data.frame(
     from = c("Admininstrator", "New User", "Support"),
     message = c(
@@ -43,7 +48,7 @@ server <- function(input, output, session) {
   output$approvalBox <- renderInfoBox({
     infoBox(
       "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
-      color = "yellow"
+      color = "lime"
     )
   })
   
@@ -57,7 +62,7 @@ server <- function(input, output, session) {
   output$approvalBox2 <- renderInfoBox({
     infoBox(
       "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
-      color = "yellow", fill = TRUE
+      color = "lime", fill = TRUE
     )
   })
 }

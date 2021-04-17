@@ -7,8 +7,12 @@ library(readr)
 library(here)
 library(janitor)
 
+library(ggplot2)
+library(patchwork)
+library(gridExtra)
+
 library(shiny)
-library(shinydashboard)
+library(bs4Dash)
 
 library(httr)
 

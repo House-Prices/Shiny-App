@@ -3,16 +3,17 @@ tabUnivariateUI <- function(id) {
   ns <- shiny::NS(id)
   
   
-  shinydashboard::tabItem(
+  tabItem(
     tabName = "univariate",
     shiny::fluidRow(
-      shinydashboard::box(
-        width = 4,
+      box(
+        title = "Input",
+        width = 3,
         shiny::uiOutput(ns("select_variable"))
       ),
-      shinydashboard::tabBox(
+      tabBox(
         id = ns("selected_tab"),
-        width = 8,
+        width = 9,
         shiny::tabPanel(
           "Categorical",
           shiny::plotOutput(ns("plot_cat"))
@@ -20,6 +21,7 @@ tabUnivariateUI <- function(id) {
         shiny::tabPanel(
           "Numeric",
           shiny::plotOutput(ns("plot_num"))
+        
         )
       )
     )
@@ -74,11 +76,18 @@ tabUnivariateServer <- function(id, data_df) {
         
         req(input$selected_cat_variable)
         
-        ggplot2::ggplot(
+        t1 <- category_df %>% 
+          count(.data[[input$selected_cat_variable]])
+        
+        p1 <- ggplot(
           data = category_df, 
-          ggplot2::aes_string(x = input$selected_cat_variable)
+          aes_string(x = input$selected_cat_variable)
         ) + 
-          ggplot2::geom_bar()
+          geom_bar() + 
+          theme_minimal()
+        
+        
+        p1 + gridExtra::tableGrob(t1, rows = NULL) + plot_layout(widths = c(3, 1))
         
       })
       
@@ -87,11 +96,25 @@ tabUnivariateServer <- function(id, data_df) {
         
         req(input$selected_num_variable)
         
-        ggplot2::ggplot(
+        p1 <- ggplot(
           data = numeric_df, 
-          ggplot2::aes_string(x = input$selected_num_variable)
+          aes_string(x = input$selected_num_variable)
         ) + 
-          ggplot2::geom_density(fill = "grey")
+          geom_density(fill = "grey") + 
+          theme_bw() + 
+          labs(title = "Density Plot")
+        
+        p2 <- ggplot(
+          data = numeric_df,
+          aes_string(x = input$selected_num_variable)
+        ) +
+          geom_boxplot() +
+          coord_flip() +
+          theme_minimal() + 
+          labs(title = "Box Plot")
+        
+        
+        p1 + p2 + plot_layout(widths = c(3, 1))
         
       })
       
