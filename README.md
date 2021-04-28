@@ -4,10 +4,14 @@
 ## House Prices Shiny App
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
-The goal of House Prices Shiny-App is to …
+This dashboard explores the House Prices dataset available on Kaggle. It
+aims to provide interactive tools to perform exploratory data analysis
+for training a machine learning model.
+
+A deployed version of this dashboard is available
+[here](https://ldauparas.shinyapps.io/shiny-app/).
 
 ## Data
 
