@@ -6,14 +6,34 @@ tabBivariateUI <- function(id) {
   tabItem(
     tabName = "bivariate",
     shiny::fluidRow(
-      box(
+      bs4Dash::box(
         title = "Input",
         width = 3,
         shiny::uiOutput(ns("select_variable_x")),
+        shiny::textOutput(ns("variable_description_x")),
+        shiny::tags$head(
+          shiny::tags$style(
+            "#tab_bivariate-variable_description_x {
+              font-style: italic;
+              color: gray;
+            }"
+          )
+        ),
+        shiny::br(),
         shiny::uiOutput(ns("select_variable_y")),
+        shiny::textOutput(ns("variable_description_y")),
+        shiny::tags$head(
+          shiny::tags$style(
+            "#tab_bivariate-variable_description_y {
+              font-style: italic;
+              color: gray;
+            }"
+          )
+        ),
+        shiny::br(),
         shiny::uiOutput(ns("select_plot_type"))
       ),
-      box(
+      bs4Dash::box(
         width = 9,
         shiny::plotOutput(ns("plot"))
       )
@@ -24,7 +44,7 @@ tabBivariateUI <- function(id) {
 }
 
 
-tabBivariateServer <- function(id, data_df) {
+tabBivariateServer <- function(id, data_df, description_df) {
   shiny::moduleServer(
     id,
     function(input, output, session) {
@@ -39,29 +59,65 @@ tabBivariateServer <- function(id, data_df) {
           tidyselect::vars_select_helpers$where(is.numeric)
         )
       
+      variable_types <- data_df %>%
+        purrr::map_chr(
+          ~ typeof(.x)
+        ) %>% 
+        unname()
+      
       output$select_variable_x <- shiny::renderUI({
         
-        shiny::selectInput(
+        shinyWidgets::pickerInput(
           inputId = session$ns("selected_variable_x"),
           label = "Select Variable (X-Axis):",
           choices = colnames(data_df),
-          selected = colnames(data_df)[1]
+          selected = colnames(data_df)[1],
+          choicesOpt = list(
+            subtext = paste(variable_types),
+            style = "color: red"
+          )
         )
           
       })
       
+      output$variable_description_x <- shiny::renderText({
+        
+        req(input$selected_variable_x)
+        
+        description_df %>% 
+          dplyr::filter(variable == input$selected_variable_x) %>% 
+          dplyr::pull(description)
+        
+      })
+      
       output$select_variable_y <- shiny::renderUI({
         
-        shiny::selectInput(
+        shinyWidgets::pickerInput(
           inputId = session$ns("selected_variable_y"),
           label = "Select Variable (Y-Axis):",
           choices = colnames(data_df),
-          selected = colnames(data_df)[2]
+          selected = colnames(data_df)[2],
+          choicesOpt = list(
+            subtext = paste(variable_types)
+          )
         )
         
       })
       
+      output$variable_description_y <- shiny::renderText({
+        
+        req(input$selected_variable_y)
+        
+        description_df %>% 
+          dplyr::filter(variable == input$selected_variable_y) %>% 
+          dplyr::pull(description)
+        
+      })
+      
       available_plots <- shiny::reactive({
+        
+        req(input$selected_variable_x)
+        req(input$selected_variable_y)
         
         x_var <- data_df %>% 
           dplyr::select(input$selected_variable_x) %>% 
@@ -107,6 +163,10 @@ tabBivariateServer <- function(id, data_df) {
       
       output$plot <- shiny::renderPlot({
         
+        req(input$selected_variable_x)
+        req(input$selected_variable_y)
+        req(input$selected_plot_type)
+        
         p <- ggplot2::ggplot(
           data = data_df
         )
@@ -140,7 +200,7 @@ tabBivariateServer <- function(id, data_df) {
                   y = input$selected_variable_x
                 )
               ) +
-              scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+              scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
               theme_minimal()
           } else {
             p <- p + 

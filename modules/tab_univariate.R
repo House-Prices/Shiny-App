@@ -10,7 +10,15 @@ tabUnivariateUI <- function(id) {
         title = "Input",
         width = 3,
         shiny::uiOutput(ns("select_variable")),
-        shiny::textOutput(ns("variable_description"))
+        shiny::textOutput(ns("variable_description")),
+        shiny::tags$head(
+          shiny::tags$style(
+            "#tab_univariate-variable_description {
+              font-style: italic;
+              color: gray;
+            }"
+          )
+        )
       ),
       tabBox(
         id = ns("selected_tab"),
@@ -78,8 +86,8 @@ tabUnivariateServer <- function(id, data_df, description_df) {
         req(input$selected_variable)
         
         description_df %>% 
-          filter(variable == input$selected_variable) %>% 
-          pull(description)
+          dplyr::filter(variable == input$selected_variable) %>% 
+          dplyr::pull(description)
         
       })
       

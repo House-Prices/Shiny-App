@@ -9,7 +9,8 @@ server <- function(input, output, session) {
   
   tabBivariateServer(
     "tab_bivariate",
-    data_df = data_list[["train"]]
+    data_df = data_list[["train"]],
+    description_df = data_list[["description"]]
   )
   
   messageData <- data.frame(
