@@ -3,7 +3,7 @@ tabBivariateUI <- function(id) {
   ns <- shiny::NS(id)
   
   
-  tabItem(
+  bs4Dash::tabItem(
     tabName = "bivariate",
     shiny::fluidRow(
       bs4Dash::box(
@@ -82,7 +82,7 @@ tabBivariateServer <- function(id, data_df, description_df) {
       
       output$variable_description_x <- shiny::renderText({
         
-        req(input$selected_variable_x)
+        shiny::req(input$selected_variable_x)
         
         description_df %>% 
           dplyr::filter(variable == input$selected_variable_x) %>% 
@@ -106,7 +106,7 @@ tabBivariateServer <- function(id, data_df, description_df) {
       
       output$variable_description_y <- shiny::renderText({
         
-        req(input$selected_variable_y)
+        shiny::req(input$selected_variable_y)
         
         description_df %>% 
           dplyr::filter(variable == input$selected_variable_y) %>% 
@@ -116,8 +116,8 @@ tabBivariateServer <- function(id, data_df, description_df) {
       
       available_plots <- shiny::reactive({
         
-        req(input$selected_variable_x)
-        req(input$selected_variable_y)
+        shiny::req(input$selected_variable_x)
+        shiny::req(input$selected_variable_y)
         
         x_var <- data_df %>% 
           dplyr::select(input$selected_variable_x) %>% 
@@ -163,9 +163,9 @@ tabBivariateServer <- function(id, data_df, description_df) {
       
       output$plot <- shiny::renderPlot({
         
-        req(input$selected_variable_x)
-        req(input$selected_variable_y)
-        req(input$selected_plot_type)
+        shiny::req(input$selected_variable_x)
+        shiny::req(input$selected_variable_y)
+        shiny::req(input$selected_plot_type)
         
         p <- ggplot2::ggplot(
           data = data_df
@@ -180,9 +180,9 @@ tabBivariateServer <- function(id, data_df, description_df) {
                 y = input$selected_variable_y
               )
             ) + 
-            theme_bw() +
-            scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            scale_x_continuous(labels = function(x) format(x, scientific = FALSE))
+            ggplot2::theme_bw() +
+            ggplot2::scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+            ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE))
           
           
         } else if (input$selected_plot_type == "box_plot") {
@@ -200,8 +200,8 @@ tabBivariateServer <- function(id, data_df, description_df) {
                   y = input$selected_variable_x
                 )
               ) +
-              scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
-              theme_minimal()
+              ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
+              ggplot2::theme_minimal()
           } else {
             p <- p + 
               ggplot2::geom_boxplot(
@@ -211,8 +211,8 @@ tabBivariateServer <- function(id, data_df, description_df) {
                 )
               ) + 
               ggplot2::coord_flip() +
-              scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
-              theme_minimal()
+              ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
+              ggplot2::theme_minimal()
           }
           
           

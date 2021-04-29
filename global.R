@@ -1,5 +1,7 @@
 
+# Load app dependencies
 library(dplyr)
+library(tidyselect)
 library(purrr)
 library(tidyr)
 library(glue)
@@ -18,15 +20,20 @@ library(shinyWidgets)
 library(httr)
 
 
-# Source utility functions
-purrr::walk(
-  list.files(here::here("R"), full.names = TRUE),
-  ~ source(.x)
-)
+# Helper function
+source_files_in_dir <- function(dir_name) {
+  
+  purrr::walk(
+    list.files(here::here(dir_name), full.names = TRUE),
+    ~ source(.x, local = FALSE)
+  )
+  
+}
 
+
+# Source utility functions
+source_files_in_dir("R")
 source_files_in_dir("modules")
 
 data_list <- readRDS("data/data_list.rds")
 
-
-# clean_train_data <- prepare_hp_data(data_list)

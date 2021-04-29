@@ -23,47 +23,47 @@ server <- function(input, output, session) {
     stringsAsFactors = FALSE
   )
   
-  output$messageMenu <- renderMenu({
+  output$messageMenu <- bs4Dash::renderMenu({
     # Code to generate each of the messageItems here, in a list. This assumes
     # that messageData is a data frame with two columns, 'from' and 'message'.
     msgs <- apply(messageData, 1, function(row) {
-      messageItem(from = row[["from"]], message = row[["message"]])
+      bs4Dash::messageItem(from = row[["from"]], message = row[["message"]])
     })
     
     # This is equivalent to calling:
     #   dropdownMenu(type="messages", msgs[[1]], msgs[[2]], ...)
-    dropdownMenu(type = "messages", .list = msgs)
+    bs4Dash::dropdownMenu(type = "messages", .list = msgs)
   })
   
   
   # The currently selected tab from the first box
-  output$tabset1Selected <- renderText({
+  output$tabset1Selected <- shiny::renderText({
     input$tabset1
   })
   
-  output$progressBox <- renderInfoBox({
-    infoBox(
-      "Progress", paste0(25 + input$count, "%"), icon = icon("list"),
+  output$progressBox <- bs4Dash::renderInfoBox({
+    bs4Dash::infoBox(
+      "Progress", paste0(25 + input$count, "%"), icon = shiny::icon("list"),
       color = "purple"
     )
   })
-  output$approvalBox <- renderInfoBox({
-    infoBox(
-      "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
+  output$approvalBox <- bs4Dash::renderInfoBox({
+    bs4Dash::infoBox(
+      "Approval", "80%", icon = shiny::icon("thumbs-up", lib = "glyphicon"),
       color = "lime"
     )
   })
   
   # Same as above, but with fill=TRUE
-  output$progressBox2 <- renderInfoBox({
-    infoBox(
-      "Progress", paste0(25 + input$count, "%"), icon = icon("list"),
+  output$progressBox2 <- bs4Dash::renderInfoBox({
+    bs4Dash::infoBox(
+      "Progress", paste0(25 + input$count, "%"), icon = shiny::icon("list"),
       color = "purple", fill = TRUE
     )
   })
-  output$approvalBox2 <- renderInfoBox({
-    infoBox(
-      "Approval", "80%", icon = icon("thumbs-up", lib = "glyphicon"),
+  output$approvalBox2 <- bs4Dash::renderInfoBox({
+    bs4Dash::infoBox(
+      "Approval", "80%", icon = shiny::icon("thumbs-up", lib = "glyphicon"),
       color = "lime", fill = TRUE
     )
   })

@@ -3,10 +3,10 @@ tabUnivariateUI <- function(id) {
   ns <- shiny::NS(id)
   
   
-  tabItem(
+  bs4Dash::tabItem(
     tabName = "univariate",
     shiny::fluidRow(
-      box(
+      bs4Dash::box(
         title = "Input",
         width = 3,
         shiny::uiOutput(ns("select_variable")),
@@ -20,7 +20,7 @@ tabUnivariateUI <- function(id) {
           )
         )
       ),
-      tabBox(
+      bs4Dash::tabBox(
         id = ns("selected_tab"),
         width = 9,
         shiny::tabPanel(
@@ -83,7 +83,7 @@ tabUnivariateServer <- function(id, data_df, description_df) {
       
       output$variable_description <- shiny::renderText({
         
-        req(input$selected_variable)
+        shiny::req(input$selected_variable)
         
         description_df %>% 
           dplyr::filter(variable == input$selected_variable) %>% 
@@ -94,23 +94,23 @@ tabUnivariateServer <- function(id, data_df, description_df) {
       
       output$plot_cat <- shiny::renderPlot({
         
-        req(input$selected_variable)
+        shiny::req(input$selected_variable)
         
         
         if (input$selected_variable %in% colnames(category_df)) {
           
           t1 <- category_df %>% 
-            count(.data[[input$selected_variable]])
+            dplyr::count(.data[[input$selected_variable]])
           
-          p1 <- ggplot(
+          p1 <- ggplot2::ggplot(
             data = category_df, 
-            aes_string(x = input$selected_variable)
+            ggplot2::aes_string(x = input$selected_variable)
           ) + 
-            geom_bar() +
-            theme_minimal()
+            ggplot2::geom_bar() +
+            ggplot2::theme_minimal()
           
           
-          p1 + gridExtra::tableGrob(t1, rows = NULL) + plot_layout(widths = c(3, 1))
+          p1 + gridExtra::tableGrob(t1, rows = NULL) + patchwork::plot_layout(widths = c(3, 1))
         
         }
         
@@ -119,33 +119,33 @@ tabUnivariateServer <- function(id, data_df, description_df) {
       
       output$plot_num <- shiny::renderPlot({
         
-        req(input$selected_variable)
+        shiny::req(input$selected_variable)
         
         if (input$selected_variable %in% colnames(numeric_df)) {
           
-          p1 <- ggplot(
+          p1 <- ggplot2::ggplot(
             data = numeric_df, 
-            aes_string(x = input$selected_variable)
+            ggplot2::aes_string(x = input$selected_variable)
           ) + 
-            geom_density(fill = "grey") + 
-            theme_bw() + 
-            scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            labs(title = "Density Plot")
+            ggplot2::geom_density(fill = "grey") + 
+            ggplot2::theme_bw() + 
+            ggplot2::scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+            ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
+            ggplot2::labs(title = "Density Plot")
           
           p2 <- ggplot(
             data = numeric_df,
-            aes_string(x = input$selected_variable)
+            ggplot2::aes_string(x = input$selected_variable)
           ) +
-            geom_boxplot() +
-            coord_flip() + 
-            scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            theme_minimal() + 
-            labs(title = "Box Plot")
+            ggplot2::geom_boxplot() +
+            ggplot2::coord_flip() + 
+            ggplot2::scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
+            ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
+            ggplot2::theme_minimal() + 
+            ggplot2::labs(title = "Box Plot")
           
           
-          p1 + p2 + plot_layout(widths = c(3, 1))
+          p1 + p2 + patchwork::plot_layout(widths = c(3, 1))
           
         }
         

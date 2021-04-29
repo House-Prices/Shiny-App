@@ -1,4 +1,13 @@
 
+#' Download House-Price Data
+#' 
+#' Helper function to download House Price data from the Kaggle API.
+#'
+#' @param username character; kaggle username
+#' @param key character; token generated with kaggle account
+#'
+#' @return Returns a named list; train, test, and metadata for house prices
+#' @export
 download_hp_data <- function(username, key) {
   
   path <- "https://www.kaggle.com/api/v1/competitions/data/download/5407/"
