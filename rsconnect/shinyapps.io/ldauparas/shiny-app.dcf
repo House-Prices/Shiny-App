@@ -5,7 +5,7 @@ account: ldauparas
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3967466
-bundleId: 4532537
+bundleId: 5277689
 url: https://ldauparas.shinyapps.io/shiny-app/
-when: 1619653039.50504
-lastSyncTime: 1619653039.50506
+when: 1637544284.09558
+lastSyncTime: 1637544284.09558

@@ -13,6 +13,13 @@ server <- function(input, output, session) {
     description_df = data_list[["description"]]
   )
   
+  tabCorrelationServer(
+    "tab_correlation",
+    data_df = data_list[["train"]],
+    description_df = data_list[["description"]]
+  )
+  
+  
   messageData <- data.frame(
     from = c("Admininstrator", "New User", "Support"),
     message = c(

@@ -6,6 +6,7 @@ sidebar <- bs4Dash::dashboardSidebar(
   bs4Dash::sidebarMenu(
     bs4Dash::menuItem("Univariate", tabName = "univariate", icon = icon("chart-bar")),
     bs4Dash::menuItem("Bivariate", tabName = "bivariate", icon = icon("chart-area")),
+    bs4Dash::menuItem("Correlation", tabName = "correlation", icon = icon("unlink")),
     bs4Dash::menuItem("Widgets", icon = icon("th"), tabName = "widgets",
              badgeLabel = "new"),
     bs4Dash::menuItem("Info Boxes", tabName = "infoboxes", icon = icon("box"))
@@ -17,6 +18,7 @@ body <- bs4Dash::dashboardBody(
   bs4Dash::tabItems(
     tabUnivariateUI("tab_univariate"),
     tabBivariateUI("tab_bivariate"),
+    tabCorrelationUI("tab_correlation"),
     bs4Dash::tabItem(tabName = "widgets",
             shiny::h2("Widgets tab content"),
             shiny::fluidRow(

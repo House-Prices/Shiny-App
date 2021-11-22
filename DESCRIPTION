@@ -5,3 +5,21 @@ License: GPL-3
 DisplayMode: Normal
 Tags: house-prices
 Type: Shiny
+Imports:
+  dplyr,
+  tidyselect,
+  purrr,
+  tidyr,
+  glue,
+  reader,
+  here,
+  janitor,
+  inspectdf,
+  ggplot2,
+  patchwork,
+  gridExtra,
+  corrplot,
+  shiny,
+  bs4Dash,
+  shinyWidgets,
+  httr

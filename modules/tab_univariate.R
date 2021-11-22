@@ -106,8 +106,8 @@ tabUnivariateServer <- function(id, data_df, description_df) {
             data = category_df, 
             ggplot2::aes_string(x = input$selected_variable)
           ) + 
-            ggplot2::geom_bar() +
-            ggplot2::theme_minimal()
+            ggplot2::geom_bar() + #ggplot2::theme_minimal()
+            ggplot2::theme_classic()
           
           
           p1 + gridExtra::tableGrob(t1, rows = NULL) + patchwork::plot_layout(widths = c(3, 1))
@@ -128,10 +128,11 @@ tabUnivariateServer <- function(id, data_df, description_df) {
             ggplot2::aes_string(x = input$selected_variable)
           ) + 
             ggplot2::geom_density(fill = "grey") + 
-            ggplot2::theme_bw() + 
+            # ggplot2::theme_bw() +
             ggplot2::scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
             ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            ggplot2::labs(title = "Density Plot")
+            ggplot2::labs(title = "Density Plot") +
+            ggplot2::theme_classic()
           
           p2 <- ggplot(
             data = numeric_df,
@@ -140,9 +141,10 @@ tabUnivariateServer <- function(id, data_df, description_df) {
             ggplot2::geom_boxplot() +
             ggplot2::coord_flip() + 
             ggplot2::scale_y_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) +
-            ggplot2::theme_minimal() + 
-            ggplot2::labs(title = "Box Plot")
+            ggplot2::scale_x_continuous(labels = function(x) format(x, scientific = FALSE)) + 
+            # ggplot2::theme_minimal() +
+            ggplot2::labs(title = "Box Plot") +
+            ggplot2::theme_classic()
           
           
           p1 + p2 + patchwork::plot_layout(widths = c(3, 1))
